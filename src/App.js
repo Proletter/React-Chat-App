@@ -10,9 +10,11 @@ class App extends Component{
 
   componentDidMount() {    
 
+    console.log("launching chat kit manager")
+
     const chatManager = new Chatkit.ChatManager({
       instanceLocator: chatkitInstanceLocator,
-      userId: "Abosede",
+      userId: "testuser",
       tokenProvider: new Chatkit.TokenProvider(
         {
           url: tokenUrl
@@ -20,19 +22,24 @@ class App extends Component{
       )
     })
     
-
+    console.log('connecting to chatkit')
     chatManager.connect()
       .then(currentuser => {
-        currentuser.subscribeToRoom({
-          roomId: '9d506af4-d923-45bf-a6ec-3b37ffeec776',
+        currentuser.subscribeToRoomMultipart({
+          roomId: currentuser.rooms[0].id,
+          messageLimit: 20,
           hooks: {
             onNewMessage: message => {
+              console.log('hoooooooks')
               console.log('message text:', message.text)
             }
           }
         })
       }
     )
+      .catch(e => console.log('there was an error ' + e))
+      
+    console.log('done with chatkit')
     }
 
 
