@@ -50,8 +50,6 @@ class App extends Component{
     console.log('done with chatkit')
     }
 
-
-
   render() {
     return (<div className="app">
         <RoomList />
